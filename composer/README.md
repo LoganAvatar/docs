@@ -21,6 +21,8 @@ WARNING:
 -	[`1.5.6`, `1.5` (*1.5/Dockerfile*)](https://github.com/composer/docker/blob/615ac2f7541ce6fc9538e513326e3aa6a2bff749/1.5/Dockerfile)
 -	[`1.4.3`, `1.4` (*1.4/Dockerfile*)](https://github.com/composer/docker/blob/615ac2f7541ce6fc9538e513326e3aa6a2bff749/1.4/Dockerfile)
 
+[![Build Status](https://doi-janky.infosiftr.net/job/multiarch/job/i386/job/composer/badge/icon) (`i386/composer` build job)](https://doi-janky.infosiftr.net/job/multiarch/job/i386/job/composer/)
+
 # Quick reference
 
 -	**Where to get help**:  
@@ -64,7 +66,7 @@ Run the `composer` image:
 ```sh
 docker run --rm --interactive --tty \
     --volume $PWD:/app \
-    composer install
+    i386/composer install
 ```
 
 You can mount the Composer home directory from your host inside the Container to share caching and configuration files:
@@ -73,7 +75,7 @@ You can mount the Composer home directory from your host inside the Container to
 docker run --rm --interactive --tty \
     --volume $PWD:/app \
     --volume $COMPOSER_HOME:/tmp \
-    composer install
+    i386/composer install
 ```
 
 By default, Composer runs as root inside the container. This can lead to permission issues on your host filesystem. You can run Composer as your local user:
@@ -82,7 +84,7 @@ By default, Composer runs as root inside the container. This can lead to permiss
 docker run --rm --interactive --tty \
     --volume $PWD:/app \
     --user $(id -u):$(id -g) \
-    composer install
+    i386/composer install
 ```
 
 When you need to access private repositories, you will either need to share your configured credentials, or mount your `ssh-agent` socket inside the running container:
@@ -94,7 +96,7 @@ docker run --rm --interactive --tty \
     --volume $PWD:/app \
     --volume $SSH_AUTH_SOCK:/ssh-auth.sock \
     --env SSH_AUTH_SOCK=/ssh-auth.sock \
-    composer install
+    i386/composer install
 ```
 
 When combining the use of private repositories with running Composer as another (local) user, you might run into non-existant user errors (thrown by ssh). To work around this, simply mount the host passwd and group files (read-only) into the container:
@@ -107,7 +109,7 @@ docker run --rm --interactive --tty \
     --volume /etc/group:/etc/group:ro \
     --user $(id -u):$(id -g) \
     --env SSH_AUTH_SOCK=/ssh-auth.sock \
-    composer install
+    i386/composer install
 ```
 
 ## Suggestions
@@ -123,7 +125,7 @@ Sometimes dependencies or Composer [scripts](https://getcomposer.org/doc/article
 	```sh
 	docker run --rm --interactive --tty \
 	    --volume $PWD:/app \
-	    composer install --ignore-platform-reqs --no-scripts
+	    i386/composer install --ignore-platform-reqs --no-scripts
 	```
 
 -	Create your own image (possibly by extending `FROM composer`).
@@ -133,7 +135,7 @@ Sometimes dependencies or Composer [scripts](https://getcomposer.org/doc/article
 -	Create your own image, and copy Composer from the official image into it:
 
 	```dockerfile
-	COPY --from=composer:1.5 /usr/bin/composer /usr/bin/composer
+	COPY --from=i386/composer:1.5 /usr/bin/composer /usr/bin/composer
 	```
 
 It is highly recommended that you create a "build" image that extends from your baseline production image. Binaries such as Composer should not end up in your production environment.
@@ -154,7 +156,7 @@ composer () {
         --volume /etc/passwd:/etc/passwd:ro \
         --volume /etc/group:/etc/group:ro \
         --volume $(pwd):/app \
-        composer "$@"
+        i386/composer "$@"
 }
 ```
 
