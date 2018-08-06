@@ -16,7 +16,9 @@ WARNING:
 
 # Supported tags and respective `Dockerfile` links
 
--	[`0.9.2`, `0.9`, `0`, `latest` (*Dockerfile*)](https://github.com/idno/Known-Docker/blob/986a2618080f32bbbcb9af3c8e7c15297d9658ea/Dockerfile)
+**No supported tags found!**
+
+It is very likely that `known` does not support the currently selected architecture (`windows-amd64`).
 
 # Quick reference
 
@@ -30,7 +32,7 @@ WARNING:
 	[Known](https://github.com/idno/Known-Docker)
 
 -	**Supported architectures**: ([more info](https://github.com/docker-library/official-images#architectures-other-than-amd64))  
-	[`amd64`](https://hub.docker.com/r/amd64/known/)
+	[`amd64`](https://hub.docker.com/r/amd64/known/), [`arm64v8`](https://hub.docker.com/r/arm64v8/known/)
 
 -	**Published image artifact details**:  
 	[repo-info repo's `repos/known/` directory](https://github.com/docker-library/repo-info/blob/master/repos/known) ([history](https://github.com/docker-library/repo-info/commits/master/repos/known))  
@@ -57,7 +59,7 @@ Known is a social publishing platform. Publish on your own site, reach your audi
 # How to use this image
 
 ```bash
-docker run --link some-mysql:db -d known
+docker run --link some-mysql:db -d winamd64/known
 ```
 
 Now you can get access to fpm running on port 9000 inside the container. If you want to access it from the Internets, we recommend using a reverse proxy in front. You can find more information on that on the [docker-compose](#docker-compose) section.
